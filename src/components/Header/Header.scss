@@ -1,0 +1,15 @@
+@import '../../css/vars.scss';
+
+header {
+    background-color: $darker-color !important;
+    a {
+        text-decoration: None;
+        color: $lighter-color;
+        font-weight: 800;
+    }
+}
+
+.app-name {
+    cursor: pointer;
+    color: $main-color;
+}

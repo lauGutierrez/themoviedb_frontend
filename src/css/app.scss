@@ -1,0 +1,33 @@
+@import './vars.scss';
+
+html, body, #root {
+    height: 100%;
+}
+
+body {
+    margin: 0px;
+    background-color: $darker-color !important;
+}
+
+.MuiButton-containedPrimary{
+    background-color: $lighter-color !important;
+}
+
+.MuiButton-textPrimary{
+    color: $darker-color !important;
+    font-weight: bold !important;
+}
+
+.MuiButton-containedSecondary{
+    background-color: $danger-color !important;
+}
+
+.MuiButton-textSecondary {
+    color: $danger-color !important;
+    font-weight: bold !important;
+}
+
+.MuiIconButton-colorSecondary {
+    color: $danger-color  !important;
+}
+
