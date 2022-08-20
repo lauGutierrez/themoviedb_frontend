@@ -1,6 +1,6 @@
 import React from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import paths from '../../router/paths';
 
@@ -16,13 +16,11 @@ const FilmixApp = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Router>
-        <Routes>
-          <Route exact path={paths.home} element={<MoviesView />}></Route>
-          <Route exact path={paths.movie} element={<MoviesView />}></Route>
-          <Route exact path={paths.series} element={<MoviesView />}></Route>
-        </Routes>
-      </Router>
+      <Routes>
+        <Route path={paths.home} element={<MoviesView />}></Route>
+        <Route path={paths.movie} element={<MoviesView />}></Route>
+        <Route path={paths.series} element={<MoviesView />}></Route>
+      </Routes>
     </ThemeProvider>
   );
 }

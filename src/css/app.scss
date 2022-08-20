@@ -6,28 +6,21 @@ html, body, #root {
 
 body {
     margin: 0px;
-    background-color: $darker-color !important;
+    background-color: $dark-color !important;
 }
 
-.MuiButton-containedPrimary{
-    background-color: $lighter-color !important;
+button,
+input,
+fieldset,
+label,
+.MuiSelect-root,
+.MuiSelect-select,
+.MuiSvgIcon-root{
+    color: $light-color !important;
+    border-color: $light-color  !important;
 }
 
-.MuiButton-textPrimary{
-    color: $darker-color !important;
-    font-weight: bold !important;
+.MuiPaper-elevation {
+    background-color: $dark-color  !important;
+    color: $light-color  !important;
 }
-
-.MuiButton-containedSecondary{
-    background-color: $danger-color !important;
-}
-
-.MuiButton-textSecondary {
-    color: $danger-color !important;
-    font-weight: bold !important;
-}
-
-.MuiIconButton-colorSecondary {
-    color: $danger-color  !important;
-}
-

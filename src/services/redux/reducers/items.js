@@ -1,9 +1,14 @@
 import actionTags from '../actions/actionsTags';
 
-const items = (state = {}, action) => {
+const items = (state = [], action) => {
     switch (action.type) {
-        case actionTags.SET_ITEMS:
-            return {};
+        case actionTags.RESET_ITEMS:
+            return [];
+        case actionTags.ADD_ITEMS:
+            return [
+                ...state,
+                action.payload
+            ];
         default:
             return state;
     }

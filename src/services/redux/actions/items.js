@@ -1,14 +1,22 @@
 import actionTags from './actionsTags';
 
-const setItems = (item) => {
+const resetItems = () => {
     return {
-        type: actionTags.SET_ITEMS,
-        payload: item
+        type: actionTags.RESET_ITEMS,
+        payload: []
     }
 }
 
-const userActions = {
-    setItems
+const addItems = (items) => {
+    return {
+        type: actionTags.ADD_ITEMS,
+        payload: items
+    }
+}
+
+const itemsActions = {
+    resetItems,
+    addItems
 };
 
-export default userActions;
+export default itemsActions;

@@ -1,10 +1,10 @@
 @import '../../css/vars.scss';
 
 header {
-    background-color: $darker-color !important;
+    background-color: $dark-color !important;
     a {
         text-decoration: None;
-        color: $lighter-color;
+        color: $light-color;
         font-weight: 800;
     }
 }
@@ -12,4 +12,21 @@ header {
 .app-name {
     cursor: pointer;
     color: $main-color;
+}
+
+.category-select {
+    min-width: 10rem !important;
+    border-color: $light-color;
+}
+
+.selected {
+    font-weight: bold !important;
+}
+
+.not-selected {
+    font-weight: normal !important;
+}
+
+.category-select label {
+    font-weight: bold !important;
 }

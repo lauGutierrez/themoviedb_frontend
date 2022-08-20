@@ -1,15 +1,9 @@
-import boardActions from './boardCrud';
-import columnActions from './columnCrud';
-import selectedBoardActions from './selectedBoard';
-import dragDropActions from './dragDrop';
-import userActions from './user';
+import itemsActions from './items';
+import visiblePageActions from './visiblePage';
 
 const actions = {
-    userActions,
-    boardActions,
-    dragDropActions,
-    selectedBoardActions,
-    columnActions
-}
+    itemsActions,
+    visiblePageActions
+};
 
 export default actions;

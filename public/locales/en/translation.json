@@ -1,3 +1,7 @@
 {
-    "app-name": "Filmix"
+    "app-name": "Filmix",
+    "movies": "Films",
+    "series": "Series",
+    "search-cta": "Search",
+    "search-keys": "Title, genre, actor..."
 }
