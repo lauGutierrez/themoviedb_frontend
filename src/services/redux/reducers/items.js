@@ -7,7 +7,7 @@ const items = (state = [], action) => {
         case actionTags.ADD_ITEMS:
             return [
                 ...state,
-                action.payload
+                ...action.payload
             ];
         default:
             return state;

@@ -120,45 +120,58 @@ const Header = (props) => {
                         </Grid>
                         <Grid item>
                             <Box pt={2}>
-                                <SearchBar
-                                    label={t('search-cta')}
-                                    placeholder={t('search-keys')}
-                                    searchCb={(input) => console.log(input)} />
+                                <img className="powered-by-logo" src="/images/themoviedb_logo.svg" alt={t('powered-by-logo')} />
                             </Box>
                         </Grid>
                     </Grid>
                     <Collapse in={isVisibleSubheader} timeout={subheaderTimeout}>
                         <Grid container
                             item xs={12}
-                            spacing={3}
                             direction="row"
-                            justifyContent="flex-start"
+                            justifyContent="space-between"
                             alignItems="center">
                             <Grid item>
-                                <Box pt={2} pb={2}>
-                                    <Typography
-                                        variant="h4"
-                                        component="div"
-                                        noWrap>
-                                        {t(visiblePage)}
-                                    </Typography>
-                                </Box>
+                                <Grid container
+                                    item xs={12}
+                                    spacing={3}
+                                    direction="row"
+                                    justifyContent="flex-start"
+                                    alignItems="center">
+                                    <Grid item>
+                                        <Box pt={2} pb={2}>
+                                            <Typography
+                                                variant="h4"
+                                                component="div"
+                                                noWrap>
+                                                {t(visiblePage)}
+                                            </Typography>
+                                        </Box>
+                                    </Grid>
+                                    <Grid item>
+                                        <Box pt={2} pb={2}>
+                                            <FormControl fullWidth className="category-select">
+                                                <InputLabel id="select-category-label">{t('category')}</InputLabel>
+                                                <Select
+                                                    labelId="select-category-label"
+                                                    id="select-category"
+                                                    value={category}
+                                                    label={t('category')}
+                                                    onChange={(event) => setCategory(event.target.value)}>
+                                                    {categories.map((category) => (
+                                                        <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
+                                                    ))}
+                                                </Select>
+                                            </FormControl>
+                                        </Box>
+                                    </Grid>
+                                </Grid>
                             </Grid>
                             <Grid item>
                                 <Box pt={2} pb={2}>
-                                    <FormControl fullWidth className="category-select">
-                                        <InputLabel id="select-category-label">{t('category')}</InputLabel>
-                                        <Select
-                                            labelId="select-category-label"
-                                            id="select-category"
-                                            value={category}
-                                            label={t('category')}
-                                            onChange={(event) => setCategory(event.target.value)}>
-                                            {categories.map((category) => (
-                                                <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
-                                            ))}
-                                        </Select>
-                                    </FormControl>
+                                    <SearchBar
+                                        label={t('search-cta')}
+                                        placeholder={t('search-keys')}
+                                        searchCb={(input) => console.log(input)} />
                                 </Box>
                             </Grid>
                         </Grid>

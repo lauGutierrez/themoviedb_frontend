@@ -15,15 +15,16 @@ const ItemsBoard = () => {
         (
           <Grid container
             direction="row"
-            justifyContent="space-between"
-            alignItems="center">
-            {items.map((data) => (
-              <Grid item xs={12} sm={12} md={4} lg={3} xl={2} key={data.id}>
+            justifyContent="flex-start"
+            alignItems="center"
+            spacing={2}>
+            {items.map((i) => (
+              <Grid item xs={12} sm={12} md={4} lg={3} xl={2} key={i.id}>
                 <ItemCard
-                  id={data.id}
-                  title={data.title}
-                  overview={data.overview}
-                  image={data.poster_path} />
+                  id={i.id}
+                  title={i.title}
+                  overview={i.overview}
+                  image={i.poster_path} />
               </Grid>
             ))}
           </Grid>

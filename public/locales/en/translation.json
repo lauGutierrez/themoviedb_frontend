@@ -3,5 +3,6 @@
     "movies": "Films",
     "series": "Series",
     "search-cta": "Search",
-    "search-keys": "Title, genre, actor..."
+    "search-keys": "Title, genre, actor...",
+    "powered-by-logo": "Logo of The movie database API"
 }

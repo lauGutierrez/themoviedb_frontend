@@ -17,9 +17,8 @@ const ItemCard = (props) => {
   }
 
   const hideFullCard = () => {
-    setFullCard(true);
+    setFullCard(false);
   }
-  console.log(props);
 
   return (
     <Card className="item-card"

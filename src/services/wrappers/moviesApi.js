@@ -1,5 +1,16 @@
 import { MOVIES_PAGE, SERIES_PAGE } from '../../const/pages';
 
+const API_KEY = 'c66df4da9796ccf8d24c250b978d2f46';
+const API_URL = 'https://api.themoviedb.org';
+const API_VERSION = 3;
+
+const MOVIE_ENDPOINT = 'movie';
+const SERIES_ENDOINT = 'series';
+
+const getUrl = (endpoint) => {
+    return `${API_URL}/${API_VERSION}/${endpoint}?api_key=${API_KEY}`;
+}
+
 const getCategories = (page) => {
     switch (page) {
         case (MOVIES_PAGE):
