@@ -1,0 +1,10 @@
+@import '../../css/vars.scss';
+
+.item-card-container:hover {
+    z-index: 100;
+}
+
+.items-board {
+    max-height: 70vh;
+    overflow: hidden;
+}

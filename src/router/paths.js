@@ -1,8 +1,7 @@
 const paths = {
-  home: "/",
   movie: "/movie",
-  series: "/series",
-  all: "/*"
+  tv: "/tv",
+  home: "/"
 };
 
 export default paths;

@@ -1,7 +1,8 @@
 {
     "app-name": "Filmix",
-    "movies": "Películas",
-    "series": "Series",
+    "movie": "Películas",
+    "tv": "Series",
+    "genre": "Género",
     "search-cta": "Búsqueda",
     "search-keys": "Título, género, actor...",
     "powered-by-logo": "Logo de The movie database API"

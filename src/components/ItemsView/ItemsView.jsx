@@ -5,17 +5,16 @@ import actions from '../../services/redux/actions/actions';
 import InternalView from '../InternalView/InternalView';
 import ItemsBoard from '../ItemsBoard/ItemsBoard';
 
-import { MOVIES_PAGE } from '../../const/pages';
 
-const MoviesView = () => {
+const ItemsView = (props) => {
   const dispatch = useDispatch();
 
-  const setVisiblePage = () => {
-    dispatch(actions.visiblePageActions.setVisiblePage(MOVIES_PAGE));
+  const setVisibleTab = () => {
+    dispatch(actions.visibleTabActions.setVisibleTab(props.tab));
   }
 
   useEffect(() => {
-    setVisiblePage();
+    setVisibleTab();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -26,4 +25,4 @@ const MoviesView = () => {
   );
 }
 
-export default MoviesView;
+export default ItemsView;

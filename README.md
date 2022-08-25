@@ -6,7 +6,7 @@
 
 ### What is it?
 
-A very simple web application, where you will be able to visually recover information about movies and series included in "The Movie Database API".
+A very simple web application, where you will be able to visually recover information about movies and tv series included in "The Movie Database API".
 
 ### Purpose
 

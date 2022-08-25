@@ -1,11 +1,11 @@
 import items from './items';
-import visiblePage from './visiblePage';
+import visibleTab from './visibleTab';
 
 import { combineReducers } from 'redux';
 
 const reducer = combineReducers({
     items,
-    visiblePage
+    visibleTab
 });
 
 export default reducer;

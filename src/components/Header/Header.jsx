@@ -6,10 +6,10 @@ import { useDispatch } from 'react-redux';
 
 import './Header.scss';
 
-import { PAGES, MOVIES_PAGE, SERIES_PAGE } from '../../const/pages';
+import { MOVIE_ENDPOINT, TV_ENDPOINT } from '../../const/moviesApi';
 import paths from '../../router/paths';
 import SearchBar from '../SearchBar/SearchBar';
-import { getCategories, getMovies, getSeries } from '../../services/wrappers/moviesApi';
+import { getGenres, getMovies, getTVSeries } from '../../services/wrappers/moviesApi';
 import actions from '../../services/redux/actions/actions';
 
 import AppBar from '@mui/material/AppBar';
@@ -26,9 +26,9 @@ import Box from '@mui/material/Box';
 
 const Header = (props) => {
     const subheaderTimeout = 1000;
-    const visiblePage = useSelector(state => state.visiblePage);
-    const [category, setCategory] = useState('');
-    const [categories, setCategories] = useState([]);
+    const visibleTab = useSelector(state => state.visibleTab);
+    const [genre, setGenre] = useState('');
+    const [genres, setGenres] = useState([]);
     const [isVisibleSubheader, setIsVisibleSubheader] = useState(false);
 
     const { t } = useTranslation();
@@ -36,37 +36,47 @@ const Header = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        setCategories(getCategories(visiblePage));
         setIsVisibleSubheader(true);
-        setItems();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const goToPage = (page) => {
+    useEffect(() => {
+        initGenres();
+        setItems();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [visibleTab]);
+
+    const initGenres = async () => {
+        let genres = await getGenres(visibleTab);
+        setGenres(genres);
+    }
+
+    const goToTab = (tab) => {
         let path = '';
 
-        switch (page) {
-            case MOVIES_PAGE:
+        switch (tab) {
+            case MOVIE_ENDPOINT:
                 path = paths.movie;
                 break;
-            case SERIES_PAGE:
-                path = paths.series;
+            case TV_ENDPOINT:
+                path = paths.tv;
                 break;
             default:
                 path = paths.movie;
         }
+        dispatch(actions.visibleTabActions.setVisibleTab(tab));
         navigate(path);
     }
 
     const setItems = async () => {
         let apiCall = null;
 
-        switch (visiblePage) {
-            case MOVIES_PAGE:
+        switch (visibleTab) {
+            case MOVIE_ENDPOINT:
                 apiCall = getMovies;
                 break;
-            case SERIES_PAGE:
-                apiCall = getSeries;
+            case TV_ENDPOINT:
+                apiCall = getTVSeries;
                 break;
             default:
                 apiCall = getMovies;
@@ -106,12 +116,12 @@ const Header = (props) => {
                                 </Grid>
                                 <Grid item>
                                     <Box pt={2}>
-                                        {PAGES.map((page) => (
+                                        {[MOVIE_ENDPOINT, TV_ENDPOINT].map((tab) => (
                                             <Button
-                                                className={visiblePage === page ? 'selected' : 'not-selected'}
-                                                key={page}
-                                                onClick={() => goToPage(page)}>
-                                                {t(page)}
+                                                className={visibleTab === tab ? 'selected' : 'not-selected'}
+                                                key={tab}
+                                                onClick={() => goToTab(tab)}>
+                                                {t(tab)}
                                             </Button>
                                         ))}
                                     </Box>
@@ -143,22 +153,22 @@ const Header = (props) => {
                                                 variant="h4"
                                                 component="div"
                                                 noWrap>
-                                                {t(visiblePage)}
+                                                {t(visibleTab)}
                                             </Typography>
                                         </Box>
                                     </Grid>
                                     <Grid item>
                                         <Box pt={2} pb={2}>
-                                            <FormControl fullWidth className="category-select">
-                                                <InputLabel id="select-category-label">{t('category')}</InputLabel>
+                                            <FormControl fullWidth className="genre-select">
+                                                <InputLabel id="select-genre-label">{t('genre')}</InputLabel>
                                                 <Select
-                                                    labelId="select-category-label"
-                                                    id="select-category"
-                                                    value={category}
-                                                    label={t('category')}
-                                                    onChange={(event) => setCategory(event.target.value)}>
-                                                    {categories.map((category) => (
-                                                        <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
+                                                    labelId="select-genre-label"
+                                                    id="select-genre"
+                                                    value={genre}
+                                                    label={t('genre')}
+                                                    onChange={(event) => setGenre(event.target.value)}>
+                                                    {genres.map((genre) => (
+                                                        <MenuItem key={genre.id} value={genre.id}>{genre.name}</MenuItem>
                                                     ))}
                                                 </Select>
                                             </FormControl>

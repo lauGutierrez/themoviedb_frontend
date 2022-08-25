@@ -1,9 +1,9 @@
 import itemsActions from './items';
-import visiblePageActions from './visiblePage';
+import visibleTabActions from './visibleTab';
 
 const actions = {
     itemsActions,
-    visiblePageActions
+    visibleTabActions
 };
 
 export default actions;

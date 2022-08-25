@@ -1,12 +1,12 @@
 import actionTags from '../actions/actionsTags';
 
-const visiblePage = (state = '', action) => {
+const visibleTab = (state = '', action) => {
     switch (action.type) {
-        case actionTags.SET_VISIBLE_PAGE:
+        case actionTags.SET_VISIBLE_TAB:
             return action.payload;
         default:
             return state;
     }
 }
 
-export default visiblePage;   
+export default visibleTab;   
