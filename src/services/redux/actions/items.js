@@ -14,9 +14,25 @@ const addItems = (items) => {
     }
 }
 
+const setGenre = (genre) => {
+    return {
+        type: actionTags.SET_GENRE,
+        payload: genre
+    }
+}
+
+const increaseCurrentPage = () => {
+    return {
+        type: actionTags.INCREASE_CURRENT_PAGE,
+        payload: null
+    }
+}
+
 const itemsActions = {
     resetItems,
-    addItems
+    addItems,
+    setGenre,
+    increaseCurrentPage
 };
 
 export default itemsActions;

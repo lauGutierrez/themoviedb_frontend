@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import './ItemCard.scss';
 
+import { IMAGES_URL } from '../../const/moviesApi';
+
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -27,8 +29,8 @@ const ItemCard = (props) => {
       <CardActionArea>
         <CardMedia
           component="img"
-          height="200"
-          image={props.image}/>
+          height="450"
+          image={props.image ? IMAGES_URL + props.image : "/images/no-image-available.jpg"}/>
         {fullCard ? 
           (
             <CardContent>

@@ -3,17 +3,20 @@ import {
     API_URL,
     API_VERSION,
     MOVIE_ENDPOINT,
+    DISCOVER_ENDPOINT,
     TV_ENDPOINT,
     GENRE_ENDOINT,
+    SEARCH_ENDOINT,
     LIST_ACTION,
-    GENRES_KEY
+    GENRES_KEY,
+    RESULTS_KEY,
+    POPULARITY_FILTER,
+    GENRE_FILTER
 } from '../../const/moviesApi';
 import { getRequest } from '../api/api';
 
 // eslint-disable-next-line
 import i18n from '../../i18n/i18n';
-
-const LANGUAGE = 'en';
 
 const getGenres = async (tab) => {
     let genres = [];
@@ -32,6 +35,7 @@ const getGenres = async (tab) => {
     return genres;
 }
 
+
 const getMoviesGenres = async () => {
     let endpoint = `${GENRE_ENDOINT}/${MOVIE_ENDPOINT}/${LIST_ACTION}`;
     let genres = await get(endpoint, GENRES_KEY);
@@ -46,67 +50,93 @@ const getTVGenres = async () => {
     return genres;
 }
 
-const getMovies = (filter) => {
-    return new Promise(
-        async (resolve, reject) => {
-            return resolve(
-                [
-                    { 'id': 1, 'title': 'Título Pelicula', 'overview': 'Bla bla bla...', 'poster_path': 'https://gmlariojainformatica.files.wordpress.com/2017/05/portada.png' },
-                    { 'id': 2, 'title': 'Título Pelicula', 'overview': 'Bla bla bla...', 'poster_path': 'https://gmlariojainformatica.files.wordpress.com/2017/05/portada.png' },
-                    { 'id': 3, 'title': 'Título Pelicula', 'overview': 'Bla bla bla...', 'poster_path': 'https://gmlariojainformatica.files.wordpress.com/2017/05/portada.png' },
-                    { 'id': 4, 'title': 'Título Pelicula', 'overview': 'Bla bla bla...', 'poster_path': 'https://gmlariojainformatica.files.wordpress.com/2017/05/portada.png' },
-                    { 'id': 5, 'title': 'Título Pelicula', 'overview': 'Bla bla bla...', 'poster_path': 'https://gmlariojainformatica.files.wordpress.com/2017/05/portada.png' },
-                    { 'id': 6, 'title': 'Título Pelicula', 'overview': 'Bla bla bla...', 'poster_path': 'https://gmlariojainformatica.files.wordpress.com/2017/05/portada.png' },
-                    { 'id': 7, 'title': 'Título Pelicula', 'overview': 'Bla bla bla...', 'poster_path': 'https://gmlariojainformatica.files.wordpress.com/2017/05/portada.png' },
-                    { 'id': 8, 'title': 'Título Pelicula', 'overview': 'Bla bla bla...', 'poster_path': 'https://gmlariojainformatica.files.wordpress.com/2017/05/portada.png' },
-                    { 'id': 9, 'title': 'Título Pelicula', 'overview': 'Bla bla bla...', 'poster_path': 'https://gmlariojainformatica.files.wordpress.com/2017/05/portada.png' },
-                    { 'id': 10, 'title': 'Título Pelicula', 'overview': 'Bla bla bla...', 'poster_path': 'https://gmlariojainformatica.files.wordpress.com/2017/05/portada.png' }
-                ]
-            );
-        }
-    );
+const getTop = async (tab, page) => {
+    let top = [];
+
+    switch (tab) {
+        case (MOVIE_ENDPOINT):
+            top = await getMoviesTop(page);
+            break;
+        case (TV_ENDPOINT):
+            top = await getTVTop(page);
+            break;
+        default:
+            top = await getMoviesTop(page);
+    }
+
+    return top;
 }
 
-const getTVSeries = (filter) => {
-    return new Promise(
-        async (resolve, reject) => {
-            return resolve(
-                [
-                    { 'id': 1, 'title': 'Título Serie', 'overview': 'Bla bla bla...', 'poster_path': 'https://i.pinimg.com/236x/85/67/b7/8567b7b7bc44a9adf48730b7ff9d6536.jpg' },
-                    { 'id': 2, 'title': 'Título Serie', 'overview': 'Bla bla bla...', 'poster_path': 'https://i.pinimg.com/236x/85/67/b7/8567b7b7bc44a9adf48730b7ff9d6536.jpg' },
-                    { 'id': 3, 'title': 'Título Serie', 'overview': 'Bla bla bla...', 'poster_path': 'https://i.pinimg.com/236x/85/67/b7/8567b7b7bc44a9adf48730b7ff9d6536.jpg' },
-                    { 'id': 4, 'title': 'Título Serie', 'overview': 'Bla bla bla...', 'poster_path': 'https://i.pinimg.com/236x/85/67/b7/8567b7b7bc44a9adf48730b7ff9d6536.jpg' },
-                    { 'id': 5, 'title': 'Título Serie', 'overview': 'Bla bla bla...', 'poster_path': 'https://i.pinimg.com/236x/85/67/b7/8567b7b7bc44a9adf48730b7ff9d6536.jpg' },
-                    { 'id': 6, 'title': 'Título Serie', 'overview': 'Bla bla bla...', 'poster_path': 'https://i.pinimg.com/236x/85/67/b7/8567b7b7bc44a9adf48730b7ff9d6536.jpg' },
-                    { 'id': 7, 'title': 'Título Serie', 'overview': 'Bla bla bla...', 'poster_path': 'https://i.pinimg.com/236x/85/67/b7/8567b7b7bc44a9adf48730b7ff9d6536.jpg' },
-                    { 'id': 8, 'title': 'Título Serie', 'overview': 'Bla bla bla...', 'poster_path': 'https://i.pinimg.com/236x/85/67/b7/8567b7b7bc44a9adf48730b7ff9d6536.jpg' },
-                    { 'id': 9, 'title': 'Título Serie', 'overview': 'Bla bla bla...', 'poster_path': 'https://i.pinimg.com/236x/85/67/b7/8567b7b7bc44a9adf48730b7ff9d6536.jpg' },
-                    { 'id': 10, 'title': 'Título Serie', 'overview': 'Bla bla bla...', 'poster_path': 'https://i.pinimg.com/236x/85/67/b7/8567b7b7bc44a9adf48730b7ff9d6536.jpg' },
-                ]
-            );
-        }
-    );
+const getMoviesTop = async (page) => {
+    let endpoint = `${DISCOVER_ENDPOINT}/${MOVIE_ENDPOINT}`;
+    let query = POPULARITY_FILTER;
+    let top = await get(endpoint, RESULTS_KEY, query, page);
+
+    return top;
 }
 
-const get = async (endpoint, key, query) => {
-    let url = getUrl(endpoint, query);
+const getTVTop = async (page) => {
+    let endpoint = `${DISCOVER_ENDPOINT}/${TV_ENDPOINT}`;
+    let query = POPULARITY_FILTER;
+    let top = await get(endpoint, RESULTS_KEY, query, page);
+
+    return top;
+}
+
+const getByGenre = async (tab, genre, page) => {
+    let items = [];
+
+    if (!genre) {
+        items = await getTop(tab, page);
+    } else {
+        switch (tab) {
+            case (MOVIE_ENDPOINT):
+                items = await getMoviesByGenre(genre, page);
+                break;
+            case (TV_ENDPOINT):
+                items = await getTVSeriesByGenre(genre, page);
+                break;
+            default:
+                items = await getMoviesByGenre(genre, page);
+        }
+    }
+    return items;
+}
+
+const getMoviesByGenre = async (genre, page) => {
+    let endpoint = `${DISCOVER_ENDPOINT}/${MOVIE_ENDPOINT}`;
+    let query = `${GENRE_FILTER}=${genre}&${POPULARITY_FILTER}`;
+    let movies = await get(endpoint, RESULTS_KEY, query, page);
+
+    return movies;
+}
+
+const getTVSeriesByGenre = async (genre, page) => {
+    let endpoint = `${DISCOVER_ENDPOINT}/${TV_ENDPOINT}`;
+    let query = `${GENRE_FILTER}=${genre}&${POPULARITY_FILTER}`;
+    let series = await get(endpoint, RESULTS_KEY, query, page);
+
+    return series;
+}
+
+const get = async (endpoint, key, query, page) => {
+    
+    let url = getUrl(endpoint, query, page);
+    console.log(url);
     let result = await getRequest(url, key);
 
     return result;
 }
 
-const getPaginated = () => {
+const getUrl = (endpoint, query, page) => {
+    let queryParameter = query ? `&${query}` : '';
+    let pageParameter = page ? `$page=${page}` : ''; 
+    let url = `${API_URL}/${API_VERSION}/${endpoint}?api_key=${API_KEY}${queryParameter}${pageParameter}&language=${i18n.language}`;
 
-}
-
-const getUrl = (endpoint, query) => {
-    let queryParameter = query ? `&query=${query}` : '';
-    let url = `${API_URL}/${API_VERSION}/${endpoint}?api_key=${API_KEY}&language=${LANGUAGE}${queryParameter}`;
     return url;
 }
 
 export {
     getGenres,
-    getMovies,
-    getTVSeries
+    getByGenre
 }

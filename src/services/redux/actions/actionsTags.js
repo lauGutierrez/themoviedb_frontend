@@ -1,7 +1,9 @@
 const actionTags = {
     SET_VISIBLE_TAB: "SET_VISIBLE_TAB",
     RESET_ITEMS: "RESET_ITEMS",
-    ADD_ITEMS: "ADD_ITEMS"
+    ADD_ITEMS: "ADD_ITEMS",
+    SET_GENRE: "SET_GENRE",
+    INCREASE_CURRENT_PAGE: "INCREASE_CURRENT_PAGE"
 };
 
 export default actionTags;

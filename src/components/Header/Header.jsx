@@ -9,7 +9,7 @@ import './Header.scss';
 import { MOVIE_ENDPOINT, TV_ENDPOINT } from '../../const/moviesApi';
 import paths from '../../router/paths';
 import SearchBar from '../SearchBar/SearchBar';
-import { getGenres, getMovies, getTVSeries } from '../../services/wrappers/moviesApi';
+import { getGenres, getByGenre } from '../../services/wrappers/moviesApi';
 import actions from '../../services/redux/actions/actions';
 
 import AppBar from '@mui/material/AppBar';
@@ -27,7 +27,9 @@ import Box from '@mui/material/Box';
 const Header = (props) => {
     const subheaderTimeout = 1000;
     const visibleTab = useSelector(state => state.visibleTab);
+    const page = useSelector(state => state.items.page);
     const [genre, setGenre] = useState('');
+
     const [genres, setGenres] = useState([]);
     const [isVisibleSubheader, setIsVisibleSubheader] = useState(false);
 
@@ -35,14 +37,18 @@ const Header = (props) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    
+
     useEffect(() => {
         setIsVisibleSubheader(true);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
-        initGenres();
-        setItems();
+        if (visibleTab) {
+            initGenres();
+            initItems();
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [visibleTab]);
 
@@ -68,22 +74,21 @@ const Header = (props) => {
         navigate(path);
     }
 
-    const setItems = async () => {
-        let apiCall = null;
-
-        switch (visibleTab) {
-            case MOVIE_ENDPOINT:
-                apiCall = getMovies;
-                break;
-            case TV_ENDPOINT:
-                apiCall = getTVSeries;
-                break;
-            default:
-                apiCall = getMovies;
-        }
-
-        let items = await apiCall({});
+    const onChangeGenre = async (genre) => {
         dispatch(actions.itemsActions.resetItems());
+        dispatch(actions.itemsActions.setGenre(genre));
+        setGenre(genre);
+        addItems(genre);
+    }
+
+    const initItems = async () => {
+        dispatch(actions.itemsActions.resetItems());
+        addItems(genre);
+    }
+
+    const addItems = async (selectedGenre) => {
+        dispatch(actions.itemsActions.increaseCurrentPage());
+        let items = await getByGenre(visibleTab, selectedGenre, page);
         dispatch(actions.itemsActions.addItems(items));
     }
 
@@ -166,7 +171,7 @@ const Header = (props) => {
                                                     id="select-genre"
                                                     value={genre}
                                                     label={t('genre')}
-                                                    onChange={(event) => setGenre(event.target.value)}>
+                                                    onChange={(event) => onChangeGenre(event.target.value)}>
                                                     {genres.map((genre) => (
                                                         <MenuItem key={genre.id} value={genre.id}>{genre.name}</MenuItem>
                                                     ))}

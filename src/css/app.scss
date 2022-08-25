@@ -9,6 +9,12 @@ body {
     background-color: $dark-color !important;
 }
 
+header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 100;
+}
+
 button,
 input,
 fieldset,
@@ -26,4 +32,8 @@ p,
 .MuiPaper-elevation {
     background-color: $dark-color  !important;
     color: $light-color  !important;
+}
+
+.height-100 {
+    height: 100vh;
 }
