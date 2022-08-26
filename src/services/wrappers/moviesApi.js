@@ -6,7 +6,7 @@ import {
     DISCOVER_ENDPOINT,
     TV_ENDPOINT,
     GENRE_ENDOINT,
-    SEARCH_ENDOINT,
+    SEARCH_ENDPOINT,
     LIST_ACTION,
     GENRES_KEY,
     RESULTS_KEY,
@@ -83,12 +83,12 @@ const getTVTop = async (page) => {
     return top;
 }
 
-const getByGenre = async (tab, genre, page) => {
+const getByGenreAndSearch = async (tab, genre, searchQuery, page) => {
     let items = [];
 
-    if (!genre) {
+    if (!genre && !searchQuery) {
         items = await getTop(tab, page);
-    } else {
+    } else if (!searchQuery) {
         switch (tab) {
             case (MOVIE_ENDPOINT):
                 items = await getMoviesByGenre(genre, page);
@@ -99,13 +99,24 @@ const getByGenre = async (tab, genre, page) => {
             default:
                 items = await getMoviesByGenre(genre, page);
         }
+    } else {
+        switch (tab) {
+            case (MOVIE_ENDPOINT):
+                items = await getMoviesBySearch(genre, searchQuery, page);
+                break;
+            case (TV_ENDPOINT):
+                items = await getTVSeriesBySearch(genre, searchQuery, page);
+                break;
+            default:
+                items = await getMoviesBySearch(genre, searchQuery, page);
+        }
     }
     return items;
 }
 
 const getMoviesByGenre = async (genre, page) => {
     let endpoint = `${DISCOVER_ENDPOINT}/${MOVIE_ENDPOINT}`;
-    let query = `${GENRE_FILTER}=${genre}&${POPULARITY_FILTER}`;
+    let query = `${GENRE_FILTER}${genre}&${POPULARITY_FILTER}`;
     let movies = await get(endpoint, RESULTS_KEY, query, page);
 
     return movies;
@@ -113,14 +124,37 @@ const getMoviesByGenre = async (genre, page) => {
 
 const getTVSeriesByGenre = async (genre, page) => {
     let endpoint = `${DISCOVER_ENDPOINT}/${TV_ENDPOINT}`;
-    let query = `${GENRE_FILTER}=${genre}&${POPULARITY_FILTER}`;
+    let query = `${GENRE_FILTER}${genre}&${POPULARITY_FILTER}`;
+    let series = await get(endpoint, RESULTS_KEY, query, page);
+
+    return series;
+}
+
+const getMoviesBySearch = async (genre, searchQuery, page) => {
+    let endpoint = `${SEARCH_ENDPOINT}/${MOVIE_ENDPOINT}`;
+    let queryParameter = `&query=${encodeURIComponent(searchQuery)}`;
+    let query = `${POPULARITY_FILTER}${queryParameter}`;
+    if (genre) {
+        query = `${query}&${GENRE_FILTER}${genre}`;
+    }
+    let movies = await get(endpoint, RESULTS_KEY, query, page);
+
+    return movies;
+}
+
+const getTVSeriesBySearch = async (genre, searchQuery, page) => {
+    let endpoint = `${SEARCH_ENDPOINT}/${TV_ENDPOINT}`;
+    let queryParameter = `&query=${encodeURIComponent(searchQuery)}`;
+    let query = `${POPULARITY_FILTER}${queryParameter}`;
+    if (genre) {
+        query = `${query}&${GENRE_FILTER}${genre}`;
+    }
     let series = await get(endpoint, RESULTS_KEY, query, page);
 
     return series;
 }
 
 const get = async (endpoint, key, query, page) => {
-    
     let url = getUrl(endpoint, query, page);
     console.log(url);
     let result = await getRequest(url, key);
@@ -130,7 +164,7 @@ const get = async (endpoint, key, query, page) => {
 
 const getUrl = (endpoint, query, page) => {
     let queryParameter = query ? `&${query}` : '';
-    let pageParameter = page ? `$page=${page}` : ''; 
+    let pageParameter = page ? `&page=${page}` : ''; 
     let url = `${API_URL}/${API_VERSION}/${endpoint}?api_key=${API_KEY}${queryParameter}${pageParameter}&language=${i18n.language}`;
 
     return url;
@@ -138,5 +172,5 @@ const getUrl = (endpoint, query, page) => {
 
 export {
     getGenres,
-    getByGenre
+    getByGenreAndSearch
 }

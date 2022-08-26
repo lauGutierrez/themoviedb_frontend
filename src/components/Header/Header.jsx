@@ -9,7 +9,7 @@ import './Header.scss';
 import { MOVIE_ENDPOINT, TV_ENDPOINT } from '../../const/moviesApi';
 import paths from '../../router/paths';
 import SearchBar from '../SearchBar/SearchBar';
-import { getGenres, getByGenre } from '../../services/wrappers/moviesApi';
+import { getGenres, getByGenreAndSearch } from '../../services/wrappers/moviesApi';
 import actions from '../../services/redux/actions/actions';
 
 import AppBar from '@mui/material/AppBar';
@@ -27,8 +27,9 @@ import Box from '@mui/material/Box';
 const Header = (props) => {
     const subheaderTimeout = 1000;
     const visibleTab = useSelector(state => state.visibleTab);
-    const page = useSelector(state => state.items.page);
-    const [genre, setGenre] = useState('');
+    const page = useSelector(state => state.items.page) || 0;
+    const genre = useSelector(state => state.items.genre) || '';
+    const query = useSelector(state => state.items.query) || '';
 
     const [genres, setGenres] = useState([]);
     const [isVisibleSubheader, setIsVisibleSubheader] = useState(false);
@@ -46,11 +47,19 @@ const Header = (props) => {
 
     useEffect(() => {
         if (visibleTab) {
+            dispatch(actions.itemsActions.resetItems());
             initGenres();
-            initItems();
+            addItems();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [visibleTab]);
+
+    useEffect(() => {
+        if (genre || query) {
+            addItems();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [genre, query]);
 
     const initGenres = async () => {
         let genres = await getGenres(visibleTab);
@@ -75,20 +84,19 @@ const Header = (props) => {
     }
 
     const onChangeGenre = async (genre) => {
-        dispatch(actions.itemsActions.resetItems());
         dispatch(actions.itemsActions.setGenre(genre));
-        setGenre(genre);
-        addItems(genre);
     }
 
-    const initItems = async () => {
-        dispatch(actions.itemsActions.resetItems());
-        addItems(genre);
+    const onChangeSearch = async (searchQuery) => {
+        dispatch(actions.itemsActions.setSearchQuery(searchQuery));
     }
 
-    const addItems = async (selectedGenre) => {
+    const addItems = async () => {
         dispatch(actions.itemsActions.increaseCurrentPage());
-        let items = await getByGenre(visibleTab, selectedGenre, page);
+        console.log('header genre', genre);
+        console.log('header query', query);
+        console.log('header page', page);
+        let items = await getByGenreAndSearch(visibleTab, genre, query, page + 1);
         dispatch(actions.itemsActions.addItems(items));
     }
 
@@ -186,7 +194,7 @@ const Header = (props) => {
                                     <SearchBar
                                         label={t('search-cta')}
                                         placeholder={t('search-keys')}
-                                        searchCb={(input) => console.log(input)} />
+                                        searchCb={(input) => onChangeSearch(input)} />
                                 </Box>
                             </Grid>
                         </Grid>

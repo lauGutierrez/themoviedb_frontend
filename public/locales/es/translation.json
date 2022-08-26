@@ -5,5 +5,8 @@
     "genre": "Género",
     "search-cta": "Búsqueda",
     "search-keys": "Título, género, actor...",
-    "powered-by-logo": "Logo de The movie database API"
+    "powered-by-logo": "Logo de The movie database API",
+    "no-title": "Sin título",
+    "no-overview": "Resumen no disponible",
+    "show-more": "Mostrar más"
 }

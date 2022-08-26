@@ -4,7 +4,8 @@ const items = (
     state = {
         'list': [],
         'page': 0,
-        'genre': ''
+        'genre': '',
+        'query': ''
     },
     action) => {
     switch (action.type) {
@@ -12,7 +13,8 @@ const items = (
             return {
                 'list': [],
                 'page': 0,
-                'genre': ''
+                'genre': '',
+                'query': ''
             };
         case actionTags.ADD_ITEMS:
             return {
@@ -25,7 +27,16 @@ const items = (
         case actionTags.SET_GENRE:
             return {
                 ...state,
+                'list': [],
+                'page': 0,
                 'genre': action.payload
+            }
+        case actionTags.SET_SEARCH_QUERY:
+            return {
+                ...state,
+                'list': [],
+                'page': 0,
+                'query': action.payload
             }
         case actionTags.INCREASE_CURRENT_PAGE:
             return {

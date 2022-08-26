@@ -5,5 +5,8 @@
     "genre": "Genre",
     "search-cta": "Search",
     "search-keys": "Title, genre, actor...",
-    "powered-by-logo": "Logo of The movie database API"
+    "powered-by-logo": "Logo of The movie database API",
+    "no-title": "Without title",
+    "no-overview": "Overview not available",
+    "show-more": "Show more"
 }

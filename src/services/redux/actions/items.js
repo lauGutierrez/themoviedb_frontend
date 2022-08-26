@@ -21,6 +21,13 @@ const setGenre = (genre) => {
     }
 }
 
+const setSearchQuery = (query) => {
+    return {
+        type: actionTags.SET_SEARCH_QUERY,
+        payload: query
+    }
+}
+
 const increaseCurrentPage = () => {
     return {
         type: actionTags.INCREASE_CURRENT_PAGE,
@@ -32,7 +39,8 @@ const itemsActions = {
     resetItems,
     addItems,
     setGenre,
-    increaseCurrentPage
+    increaseCurrentPage,
+    setSearchQuery
 };
 
 export default itemsActions;

@@ -34,3 +34,13 @@ header {
 .powered-by-logo {
     width: 150px;
 }
+
+.rotate {
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
+    transition-duration: 0.5s;
+    transition-property: transform;
+}

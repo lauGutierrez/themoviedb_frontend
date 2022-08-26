@@ -10,3 +10,11 @@
     transition-duration: 0.5s;
     transition-property: transform;
 }
+
+.MuiCardMedia-root {
+    object-fit: fill !important;
+}
+
+.expand-more {
+    text-align: right;
+}
