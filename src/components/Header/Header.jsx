@@ -27,7 +27,6 @@ import Box from '@mui/material/Box';
 const Header = (props) => {
     const subheaderTimeout = 1000;
     const visibleTab = useSelector(state => state.visibleTab);
-    const page = useSelector(state => state.items.page) || 0;
     const genre = useSelector(state => state.items.genre) || '';
     const query = useSelector(state => state.items.query) || '';
 
@@ -92,12 +91,10 @@ const Header = (props) => {
     }
 
     const addItems = async () => {
-        dispatch(actions.itemsActions.increaseCurrentPage());
-        console.log('header genre', genre);
-        console.log('header query', query);
-        console.log('header page', page);
-        let items = await getByGenreAndSearch(visibleTab, genre, query, page + 1);
-        dispatch(actions.itemsActions.addItems(items));
+        let items = await getByGenreAndSearch(visibleTab, genre, query, 1);
+        if (items && items.length > 0) {
+            dispatch(actions.itemsActions.addItems(items));
+        }
     }
 
     return (

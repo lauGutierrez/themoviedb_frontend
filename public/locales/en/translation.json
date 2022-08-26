@@ -8,5 +8,9 @@
     "powered-by-logo": "Logo of The movie database API",
     "no-title": "Without title",
     "no-overview": "Overview not available",
-    "show-more": "Show more"
+    "show-more": "Show more",
+    "top-heading": "The most populars",
+    "genre-heading": "Results by genre",
+    "search-heading": "Results for your search",
+    "no-results": "No results for your search"
 }

@@ -28,18 +28,10 @@ const setSearchQuery = (query) => {
     }
 }
 
-const increaseCurrentPage = () => {
-    return {
-        type: actionTags.INCREASE_CURRENT_PAGE,
-        payload: null
-    }
-}
-
 const itemsActions = {
     resetItems,
     addItems,
     setGenre,
-    increaseCurrentPage,
     setSearchQuery
 };
 
