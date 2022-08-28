@@ -34,6 +34,10 @@ p,
     color: $light-color  !important;
 }
 
+.MuiCardMedia-root {
+    object-fit: fill !important;
+}
+
 .height-100 {
     height: 100vh;
 }
@@ -44,4 +48,16 @@ p,
 
 .MuiSkeleton-root {
     background-color: $disabled-color  !important;
+}
+
+.MuiDrawer-root, .MuiBackdrop-root, .MuiDrawer-paper{
+    width: 300px;
+}
+
+.MuiCardContent-root {
+    padding-bottom: 0px !important;
+}
+
+.MuiPaper-root {
+    border-radius: 0px !important;
 }
