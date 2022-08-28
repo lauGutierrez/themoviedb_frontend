@@ -4,6 +4,7 @@ const items = (
     state = {
         'list': [],
         'page': 1,
+        'total': 0,
         'genre': '',
         'query': '',
         'loading': false
@@ -14,6 +15,7 @@ const items = (
             return {
                 'list': [],
                 'page': 1,
+                'total': 0,
                 'genre': '',
                 'query': '',
                 'loading': true
@@ -23,9 +25,10 @@ const items = (
                 ...state,
                 'loading': false,
                 'page': state.page + 1,
+                'total': action.payload.total,
                 'list': [
                     ...state.list,
-                    ...action.payload
+                    ...action.payload.items
                 ]
             }
         case actionTags.SET_GENRE:
@@ -33,6 +36,7 @@ const items = (
                 ...state,
                 'list': [],
                 'page': 1,
+                'total': 0,
                 'loading': true,
                 'genre': action.payload
             }
@@ -41,6 +45,7 @@ const items = (
                 ...state,
                 'list': [],
                 'page': 1,
+                'total': 0,
                 'loading': true,
                 'query': action.payload
             }

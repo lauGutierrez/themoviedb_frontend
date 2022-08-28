@@ -7,10 +7,13 @@ const resetItems = () => {
     }
 }
 
-const addItems = (items) => {
+const addItems = (items, total) => {
     return {
         type: actionTags.ADD_ITEMS,
-        payload: items
+        payload: {
+            items,
+            total
+        }
     }
 }
 

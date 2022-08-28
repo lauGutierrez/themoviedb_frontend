@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -8,6 +8,7 @@ import './ItemsBoard.scss';
 import { getByGenreAndSearch } from '../../services/wrappers/moviesApi';
 import actions from '../../services/redux/actions/actions';
 import ItemCard from '../ItemCard/ItemCard';
+import ScrollPaginator from '../ScrollPaginator/ScrollPaginator';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -25,27 +26,9 @@ const ItemsBoard = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      if (entries[0].isIntersecting === true) {
-        addItems();
-      }
-    },
-    { threshold: [0.1] }
-  );
-
-  useEffect(() => {
-    if (!loading && items && items.length > 0) {
-      observer.observe(document.querySelector(".pagination-area"));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading]);
-
   const addItems = async () => {
-    let items = await getByGenreAndSearch(visibleTab, genre, query, page);
-    if (items && items.length > 0) {
-      dispatch(actions.itemsActions.addItems(items));
-    }
+    let { result, total } = await getByGenreAndSearch(visibleTab, genre, query, page);
+    dispatch(actions.itemsActions.addItems(result, total));
   }
 
   const getHeading = () => {
@@ -134,8 +117,8 @@ const ItemsBoard = () => {
           :
           null
         }
-        <Grid item xs={12}>
-          <div className="pagination-area"></div>
+        <Grid item xs={12} className="width-100">
+          <ScrollPaginator addItemsCb={addItems}/>
         </Grid>
       </Grid>
     );
@@ -144,7 +127,7 @@ const ItemsBoard = () => {
   const getComponent = () => {
     if (loading) {
       return getLoadingComponent();
-    } else if (items && items.length == 0) {
+    } else if (items && items.length === 0) {
       return getNoResultsComponent();
     } else {
       return getFulfilledComponent();

@@ -37,8 +37,6 @@ const Header = (props) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    
-
     useEffect(() => {
         setIsVisibleSubheader(true);
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -46,7 +44,6 @@ const Header = (props) => {
 
     useEffect(() => {
         if (visibleTab) {
-            dispatch(actions.itemsActions.resetItems());
             initGenres();
             addItems();
         }
@@ -61,8 +58,8 @@ const Header = (props) => {
     }, [genre, query]);
 
     const initGenres = async () => {
-        let genres = await getGenres(visibleTab);
-        setGenres(genres);
+        let { result } = await getGenres(visibleTab);
+        setGenres(result);
     }
 
     const goToTab = (tab) => {
@@ -78,23 +75,24 @@ const Header = (props) => {
             default:
                 path = paths.movie;
         }
+        dispatch(actions.itemsActions.resetItems());
         dispatch(actions.visibleTabActions.setVisibleTab(tab));
         navigate(path);
     }
 
     const onChangeGenre = async (genre) => {
+        dispatch(actions.itemsActions.setSearchQuery(''));
         dispatch(actions.itemsActions.setGenre(genre));
     }
 
     const onChangeSearch = async (searchQuery) => {
+        dispatch(actions.itemsActions.setGenre(''));
         dispatch(actions.itemsActions.setSearchQuery(searchQuery));
     }
 
     const addItems = async () => {
-        let items = await getByGenreAndSearch(visibleTab, genre, query, 1);
-        if (items && items.length > 0) {
-            dispatch(actions.itemsActions.addItems(items));
-        }
+        let { result, total } = await getByGenreAndSearch(visibleTab, genre, query, 1);
+        dispatch(actions.itemsActions.addItems(result, total));
     }
 
     return (
@@ -191,6 +189,7 @@ const Header = (props) => {
                                     <SearchBar
                                         label={t('search-cta')}
                                         placeholder={t('search-keys')}
+                                        default={query}
                                         searchCb={(input) => onChangeSearch(input)} />
                                 </Box>
                             </Grid>

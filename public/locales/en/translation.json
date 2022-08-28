@@ -9,8 +9,11 @@
     "no-title": "Without title",
     "no-overview": "Overview not available",
     "show-more": "Show more",
-    "top-heading": "The most populars",
+    "top-heading": "Most populars",
     "genre-heading": "Results by genre",
     "search-heading": "Results for your search",
-    "no-results": "No results for your search"
+    "no-results": "No results for your search",
+    "paginator-1": "You have seen",
+    "paginator-2" : "of",
+    "paginator-3": "results"
 }

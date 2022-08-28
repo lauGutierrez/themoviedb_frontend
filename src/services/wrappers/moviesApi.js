@@ -13,7 +13,6 @@ import {
     POPULARITY_FILTER,
     GENRE_FILTER
 } from '../../const/moviesApi';
-import { getRequest } from '../api/api';
 
 // eslint-disable-next-line
 import i18n from '../../i18n/i18n';
@@ -156,9 +155,13 @@ const getTVSeriesBySearch = async (genre, searchQuery, page) => {
 
 const get = async (endpoint, key, query, page) => {
     let url = getUrl(endpoint, query, page);
-    console.log(url);
-    let result = await getRequest(url, key);
+    let response = await fetch(url);
+    let data = await response.json();
 
+    let result = {
+        'result': key ? data[key] : data,
+        'total': data['total_results']
+    };
     return result;
 }
 

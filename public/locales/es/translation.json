@@ -12,5 +12,8 @@
     "top-heading": "Las más populares",
     "genre-heading": "Resultados por género",
     "search-heading": "Resultados de la búsqueda",
-    "no-results": "No hay resultados para tu búsqueda"
+    "no-results": "No hay resultados para tu búsqueda",
+    "paginator-1": "Has visto",
+    "paginator-2": "de",
+    "paginator-3": "resultados"
 }
