@@ -11,6 +11,10 @@
     transition-property: transform;
 }
 
+.item-card-opened {
+    height: 100%;
+}
+
 .MuiCardMedia-root {
     object-fit: fill !important;
 }

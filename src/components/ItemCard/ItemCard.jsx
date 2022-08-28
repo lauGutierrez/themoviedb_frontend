@@ -23,9 +23,14 @@ const ItemCard = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpened]);
 
+  const openCard = () => {
+    setIsOpened(true);
+
+  }
+
   return (
     <React.Fragment>
-      <Card className="item-card" onClick={() => setIsOpened(true)}>
+      <Card className="item-card" onClick={openCard}>
         <CardActionArea>
           <CardMedia
             component="img"
@@ -37,7 +42,7 @@ const ItemCard = (props) => {
         anchor="right"
         open={isOpened}
         onClick={() => setIsOpened(false)}>
-        <Card className="item-card-detail">
+        <Card className="item-card-opened">
           <CardActionArea>
             <CardMedia
               component="img"
@@ -47,12 +52,10 @@ const ItemCard = (props) => {
               <Typography gutterBottom variant="h6" component="div">
                 {props.title}
               </Typography>
-            </CardContent>
-            <Collapse in={isVisibleOverview} timeout="auto" unmountOnExit>
-              <CardContent>
+              <Collapse in={isVisibleOverview} timeout="auto" unmountOnExit>
                 <Typography paragraph>{props.overview}</Typography>
-              </CardContent>
-            </Collapse>
+              </Collapse>
+            </CardContent>
           </CardActionArea>
         </Card>
       </Drawer>

@@ -50,7 +50,9 @@ p,
     background-color: $disabled-color  !important;
 }
 
-.MuiDrawer-root, .MuiBackdrop-root, .MuiDrawer-paper{
+.MuiDrawer-root,
+.MuiBackdrop-root,
+.MuiDrawer-paper{
     width: 300px;
 }
 
@@ -58,6 +60,7 @@ p,
     padding-bottom: 0px !important;
 }
 
-.MuiPaper-root {
-    border-radius: 0px !important;
+.MuiCardActionArea-root,
+.MuiCardContent-root{
+    height: 100%;
 }
