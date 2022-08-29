@@ -27,8 +27,9 @@ import Box from '@mui/material/Box';
 const Header = (props) => {
     const subheaderTimeout = 1000;
     const visibleTab = useSelector(state => state.visibleTab);
-    const genre = useSelector(state => state.items.genre) || '';
-    const query = useSelector(state => state.items.query) || '';
+    const items = useSelector(state => state.items.list);
+    const genre = useSelector(state => state.items.genre);
+    const query = useSelector(state => state.items.query);
 
     const [genres, setGenres] = useState([]);
     const [isVisibleSubheader, setIsVisibleSubheader] = useState(false);
@@ -38,20 +39,15 @@ const Header = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        setIsVisibleSubheader(true);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    useEffect(() => {
         if (visibleTab) {
+            setIsVisibleSubheader(true);
             initGenres();
-            addItems();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [visibleTab]);
 
     useEffect(() => {
-        if (genre || query) {
+        if (items.length === 0) {
             addItems();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
