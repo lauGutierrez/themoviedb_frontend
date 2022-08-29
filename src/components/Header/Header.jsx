@@ -87,8 +87,10 @@ const Header = (props) => {
     }
 
     const onChangeSearch = async (searchQuery) => {
-        dispatch(actions.itemsActions.setGenre(''));
-        dispatch(actions.itemsActions.setSearchQuery(searchQuery));
+        if (searchQuery !== query) {
+            dispatch(actions.itemsActions.setGenre(''));
+            dispatch(actions.itemsActions.setSearchQuery(searchQuery));
+        }
     }
 
     const addItems = async () => {
