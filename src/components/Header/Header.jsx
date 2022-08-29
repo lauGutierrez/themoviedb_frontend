@@ -39,15 +39,20 @@ const Header = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        setIsVisibleSubheader(true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
         if (visibleTab) {
-            setIsVisibleSubheader(true);
             initGenres();
+            addItems();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [visibleTab]);
 
     useEffect(() => {
-        if (items.length === 0) {
+        if (isVisibleSubheader && items.length === 0) {
             addItems();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

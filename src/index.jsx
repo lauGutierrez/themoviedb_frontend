@@ -13,7 +13,9 @@ const container = document.getElementById('root');
 const root = ReactDOMClient.createRoot(container);
 
 root.render(
-  <Provider store={store}>
-    <FilmixApp />
-  </Provider>
+  <React.StrictMode>
+    <Provider store={store}>
+      <FilmixApp />
+    </Provider>
+  </React.StrictMode>
 );
