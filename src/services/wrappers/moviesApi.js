@@ -4,6 +4,7 @@ import {
     API_VERSION,
     MOVIE_ENDPOINT,
     DISCOVER_ENDPOINT,
+    POPULAR_ENDPOINT,
     TV_ENDPOINT,
     GENRE_ENDOINT,
     SEARCH_ENDPOINT,
@@ -54,33 +55,49 @@ const getTop = async (tab, page) => {
 
     switch (tab) {
         case (MOVIE_ENDPOINT):
-            top = await getMoviesTop(page);
+            top = await getPopularMovies(page);
             break;
         case (TV_ENDPOINT):
-            top = await getTVTop(page);
+            top = await getPopularTVSeries(page);
             break;
         default:
-            top = await getMoviesTop(page);
+            top = await getPopularMovies(page);
     }
 
     return top;
 }
 
-const getMoviesTop = async (page) => {
-    let endpoint = `${DISCOVER_ENDPOINT}/${MOVIE_ENDPOINT}`;
-    let query = POPULARITY_FILTER;
+const getPopularMovies = async (page) => {
+    let endpoint = `${MOVIE_ENDPOINT}/${POPULAR_ENDPOINT}`;
+    let query = '';
     let top = await get(endpoint, RESULTS_KEY, query, page);
 
     return top;
 }
 
-const getTVTop = async (page) => {
-    let endpoint = `${DISCOVER_ENDPOINT}/${TV_ENDPOINT}`;
-    let query = POPULARITY_FILTER;
+const getPopularTVSeries = async (page) => {
+    let endpoint = `${TV_ENDPOINT}/${POPULAR_ENDPOINT}`;
+    let query = '';
     let top = await get(endpoint, RESULTS_KEY, query, page);
 
     return top;
 }
+
+// const getMoviesOrderedByPopularity = async (page) => {
+//     let endpoint = `${DISCOVER_ENDPOINT}/${MOVIE_ENDPOINT}`;
+//     let query = POPULARITY_FILTER;
+//     let top = await get(endpoint, RESULTS_KEY, query, page);
+
+//     return top;
+// }
+
+// const getTVSeriesOrderedByPopularity = async (page) => {
+//     let endpoint = `${DISCOVER_ENDPOINT}/${TV_ENDPOINT}`;
+//     let query = POPULARITY_FILTER;
+//     let top = await get(endpoint, RESULTS_KEY, query, page);
+
+//     return top;
+// }
 
 const getByGenreAndSearch = async (tab, genre, searchQuery, page) => {
     let items = [];
@@ -155,6 +172,7 @@ const getTVSeriesBySearch = async (genre, searchQuery, page) => {
 
 const get = async (endpoint, key, query, page) => {
     let url = getUrl(endpoint, query, page);
+    console.log(url);
     let response = await fetch(url);
     let data = await response.json();
 

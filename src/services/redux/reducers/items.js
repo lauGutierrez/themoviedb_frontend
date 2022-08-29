@@ -7,7 +7,7 @@ const items = (
         'total': 0,
         'genre': '',
         'query': '',
-        'loading': false
+        'loading': true
     },
     action) => {
     switch (action.type) {

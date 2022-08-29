@@ -11,6 +11,7 @@ const MOVIE_ENDPOINT = 'movie';
 const TV_ENDPOINT = 'tv';
 const GENRE_ENDOINT = 'genre';
 const DISCOVER_ENDPOINT = 'discover';
+const POPULAR_ENDPOINT = 'popular';
 const SEARCH_ENDPOINT = 'search';
 
 /* --- ACTIONS ----------------------------- */
@@ -34,6 +35,7 @@ export {
     API_VERSION,
     MOVIE_ENDPOINT,
     DISCOVER_ENDPOINT,
+    POPULAR_ENDPOINT,
     TV_ENDPOINT,
     GENRE_ENDOINT,
     LIST_ACTION,

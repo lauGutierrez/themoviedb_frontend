@@ -26,12 +26,17 @@ p,
 .MuiSvgIcon-root,
 .MuiPaginationItem-root{
     color: $light-color !important;
-    border-color: $light-color  !important;
+    border-color: $light-color !important;
+}
+
+.MuiFab-root {
+    color: $light-color !important;
+    background-color: $main-color !important;
 }
 
 .MuiPaper-elevation {
-    background-color: $dark-color  !important;
-    color: $light-color  !important;
+    background-color: $dark-color !important;
+    color: $light-color !important;
 }
 
 .MuiCardMedia-root {
@@ -63,4 +68,8 @@ p,
 .MuiCardActionArea-root,
 .MuiCardContent-root{
     height: 100%;
+}
+
+.MuiDrawer-root {
+    z-index: 0 !important;
 }
