@@ -81,6 +81,7 @@ const ItemsBoard = () => {
   }
 
   const getLoadingComponent = () => {
+    goBackToTop();
     return (
       <Grid className="height-100"
         container
@@ -98,6 +99,7 @@ const ItemsBoard = () => {
   }
 
   const getNoResultsComponent = () => {
+    goBackToTop();
     return (
       <Grid className="no-results"
         container
