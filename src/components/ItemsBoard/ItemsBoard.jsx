@@ -65,7 +65,7 @@ const ItemsBoard = () => {
   }
 
   const goBackToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    //window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   const getHeading = () => {
@@ -86,11 +86,13 @@ const ItemsBoard = () => {
       <Grid className="height-100"
         container
         direction="row"
-        justifyContent="flex-start"
+        justifyContent="space-evenly"
         alignItems="center"
-        spacing={2}>
-        {[...Array(12)].map((i, index) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={index}>
+        spacing={4}>
+        {[...Array(20)].map((i, index) => (
+          <Grid item xs={12} sm={6} md={4} lg={3} xl={2}
+            key={index}
+            className="item-card-skeleton">
             <Skeleton variant="rounded" height={400} />
           </Grid>
         ))}

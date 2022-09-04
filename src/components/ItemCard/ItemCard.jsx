@@ -27,6 +27,7 @@ const ItemCard = (props) => {
           <CardMedia
             component="img"
             height="400"
+            alt={props.title}
             image={props.image ? IMAGES_URL + props.image : "/images/no-image-available.jpg"} />
         </CardActionArea>
       </Card>

@@ -3,7 +3,7 @@
 const API_KEY = 'c66df4da9796ccf8d24c250b978d2f46';
 const API_URL = 'https://api.themoviedb.org';
 const API_VERSION = 3;
-const IMAGES_URL = 'https://image.tmdb.org/t/p/w500/';
+const IMAGES_URL = 'https://image.tmdb.org/t/p/w500';
 
 /* --- ENDPOINTS --------------------------- */
 
