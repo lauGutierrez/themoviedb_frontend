@@ -34,7 +34,7 @@ jest.mock('react-router-dom', () => ({
 
 jest.mock('../../services/wrappers/moviesApi');
 
-describe('Without filters, by default load the most popular movies', () => {
+describe('Test movies', () => {
     test('Check most popular movies loaded by default', async () => {
         const items = getMostPopular(1, 'movie');
         const genres = getMoviesGenres();
@@ -57,7 +57,7 @@ describe('Without filters, by default load the most popular movies', () => {
     });
 });
 
-// describe('Without filters, by default load the most popular series', () => {
+// describe('Test series', () => {
 //     test('Check most popular series loaded by default', async () => {
 //         const items = getMostPopular(1, 'series');
 //         const genres = getSeriesGenres();
@@ -74,7 +74,7 @@ describe('Without filters, by default load the most popular movies', () => {
 //     });
 // });
 
-// describe('Search movies by text', () => {
+// describe('Test movies', () => {
 //     test('Check search movies by text filter', async () => {
 //         const items = getBySearchText(1, 'series');
 //         const genres = getMoviesGenres();
@@ -88,7 +88,7 @@ describe('Without filters, by default load the most popular movies', () => {
 //     });
 // });
 
-// describe('Search series by text', () => {
+// describe('Test series', () => {
 //     test('Check search series by text filter', async () => {
 //         const items = getBySearchText(1, 'series');
 //         const genres = getSeriesGenres();
@@ -102,7 +102,7 @@ describe('Without filters, by default load the most popular movies', () => {
 //     });
 // });
 
-// describe('Search movies by genre', () => {
+// describe('Test movies', () => {
 //     test('Check search movies by genre filter', async () => {
 //         const items = getByGenre(1, 'series');
 //         const genres = getMoviesGenres();
@@ -116,7 +116,7 @@ describe('Without filters, by default load the most popular movies', () => {
 //     });
 // });
 
-// describe('Search series by genre', () => {
+// describe('Test series', () => {
 //     test('Check search series by genre filter', async () => {
 //         const items = getByGenre(1, 'series');
 //         const genres = getSeriesGenres();

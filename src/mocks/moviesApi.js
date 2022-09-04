@@ -30,6 +30,7 @@ const getMockItems = (page, item, filter) => {
       }
     );
   });
+  return movies;
 }
 
 const getMoviesGenres = () => {
