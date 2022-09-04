@@ -42,7 +42,7 @@ const ScrollPaginator = (props) => {
       (entries) => {
         setIsIntersecting(entries[0].isIntersecting);
       },
-      { threshold: [1] }
+      { threshold: [0.5] }
     );
     observer.observe(document.querySelector(".paginator"));
   }

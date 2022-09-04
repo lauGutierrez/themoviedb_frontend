@@ -134,7 +134,7 @@ const ItemsBoard = () => {
           direction="column"
           justifyContent="flex-start"
           alignItems="flex-start"
-          spacing={1}>
+          spacing={2}>
           <Grid item xs={12}>
             <Typography variant="h5" component="span" sx={{ fontWeight: 'bold' }}>
               {getHeading()}
@@ -145,9 +145,9 @@ const ItemsBoard = () => {
               <Grid className="height-100" container item
                 xs={12}
                 direction="row"
-                justifyContent="flex-start"
+                justifyContent="space-evenly"
                 alignItems="center"
-                spacing={2}>
+                spacing={4}>
                 {items.map((i) => (
                   <Grid item
                     xs={12} sm={6} md={4} lg={3} xl={2}
