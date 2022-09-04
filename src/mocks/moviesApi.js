@@ -20,7 +20,7 @@ const getMockItems = (page, item, filter) => {
   };
 
   [...Array(RESULTS_PER_PAGE)].forEach((_, i) => {
-    let id = page + i;
+    let id = (page - 1) * RESULTS_PER_PAGE + i + 1;
     movies['result'].push(
       {
         "id": id,
