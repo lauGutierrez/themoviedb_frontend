@@ -65,7 +65,7 @@ const ItemsBoard = () => {
   }
 
   const goBackToTop = () => {
-    //window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   const getHeading = () => {

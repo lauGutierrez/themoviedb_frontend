@@ -1,11 +1,7 @@
 import { render, screen, waitFor, act, cleanup, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
 import { Provider } from 'react-redux';
-import 'intersection-observer';
-
-import {
-    mockAllIsIntersecting
-} from 'react-intersection-observer/test-utils';
+import { useInView } from 'react-intersection-observer';
 
 import store from '../../services/redux/stores/store.js';
 
@@ -37,76 +33,101 @@ jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     useNavigate: () => (jest.fn())
 }));
-
 jest.mock('../../services/wrappers/moviesApi');
+jest.mock('react-intersection-observer');
 
-describe('Movies tests', () => {
+const MAX_TIMEOUT = 10000;
 
-    beforeEach(() => {
-        // const mockIntersectionObserver = jest.fn();
-        // mockIntersectionObserver.mockReturnValue({
-        //     observe: () => null,
-        //     unobserve: () => null,
-        //     disconnect: () => null
-        // });
-        // window.IntersectionObserver = mockIntersectionObserver;
-        mockAllIsIntersecting(false);
-    });
+beforeAll(() => {
+    window.scrollTo = (x, y) => {
+        document.documentElement.scrollTop = y;
+    }
+});
 
-    afterEach(() => {
-        cleanup();
-    });
+afterAll(() => {
+});
 
-    test('Check most popular movies loaded by default', async () => {
-        const items = getMostPopular(1, 'movie');
-        const genres = getMoviesGenres();
+beforeEach(() => {
+    useInView.mockImplementation(() => [null, false, null]);
+});
 
-        getGenres.mockResolvedValue(genres);
-        getByGenreAndSearch.mockResolvedValue(items);
+afterEach(() => {
+    cleanup();
+});
 
-        await act(
-            async () => await waitFor(
-                () => render(
-                    <Provider store={store}>
-                        <ItemsView tab={MOVIE_ENDPOINT} />
-                    </Provider>
-                )
+test('Check most popular movies loaded by default', async () => {
+    const items = getMostPopular(1, 'movie');
+    const genres = getMoviesGenres();
+
+    getGenres.mockResolvedValue(genres);
+    getByGenreAndSearch.mockResolvedValue(items);
+
+    await act(
+        async () => await waitFor(
+            () => render(
+                <Provider store={store}>
+                    <ItemsView tab={MOVIE_ENDPOINT} />
+                </Provider>
             )
-        );
+        )
+    );
 
-        const image = screen.getByAltText('This is the title text for the most popular movie 1');
-        expect(image.src).toContain(TEST_POSTER_PATH);
-    });
+    const image = screen.getByAltText('This is the title text for the most popular movie 1');
+    expect(image.src).toContain(TEST_POSTER_PATH);
 
-    test.only('Check search movies by text filter', async () => {
-        const items = getMostPopular(1, 'movie');
-        const genres = getMoviesGenres();
+}, MAX_TIMEOUT);
 
-        getGenres.mockResolvedValue(genres);
-        getByGenreAndSearch.mockResolvedValue(items);
+// test('Check most popular series loaded by default', async () => {
+//     console.log('empieza test 2');
+//     const items = getMostPopular(1, 'series');
+//     const genres = getSeriesGenres();
 
-        await act(
-            async () => await waitFor(
-                () => render(
-                    <Provider store={store}>
-                        <ItemsView tab={MOVIE_ENDPOINT} />
-                    </Provider>
-                )
+//     getGenres.mockResolvedValue(genres);
+//     getByGenreAndSearch.mockResolvedValue(items);
+
+//     await act(
+//         async () => await waitFor(
+//             () => render(
+//                 <Provider store={store}>
+//                     <ItemsView tab={TV_ENDPOINT} />
+//                 </Provider>
+//             )
+//         )
+//     );
+
+//     const image = screen.getByAltText('This is the title text for the most popular series 1');
+//     expect(image.src).toContain(TEST_POSTER_PATH);
+//     console.log('termina test 2');
+// }, MAX_TIMEOUT);
+
+test('Check search movies by text filter', async () => {
+    getGenres.mockResolvedValue(getMoviesGenres());
+    getByGenreAndSearch.mockResolvedValue(getMostPopular(1, 'movie'));
+
+    await act(
+        async () => await waitFor(
+            () => render(
+                <Provider store={store}>
+                    <ItemsView tab={MOVIE_ENDPOINT} />
+                </Provider>
             )
-        );
-        const user = userEvent.setup();
+        )
+    );
 
-        const searchInput = screen.getByPlaceholderText(/search-keys/);
-        await userEvent.type(searchInput, 'random search');
+    getByGenreAndSearch.mockResolvedValue(getBySearchText(1, 'movie'));
 
-        const searchButton = screen.getByRole('button', { name: 'search' });
-        await user.click(searchButton);
+    const user = userEvent.setup();
+    const searchInput = screen.getByPlaceholderText(/search-keys/);
+    const searchButton = screen.getByRole('button', { name: 'search' });
 
-        screen.debug(undefined, 300000);
+    await user.type(searchInput, 'random search');
+    user.click(searchButton);
 
-        const image = screen.getByAltText('This is the title text for filtered by search text movie 1');
-        expect(image.src).toContain(TEST_POSTER_PATH);
-    });
+    const image = await screen.findByAltText(
+        'This is the title text for the filtered by search text movie 1'
+    );
+    expect(image.src).toContain(TEST_POSTER_PATH);
+}, MAX_TIMEOUT);
 
     // test('Check search movies by genre filter', async () => {
     //     const items = getByGenre(1, 'movies');
@@ -119,37 +140,6 @@ describe('Movies tests', () => {
     //         () => render(<ItemsView tab={MOVIE_ENDPOINT} />)
     //     );
     // });
-});
-
-// describe('Test 2', () => {
-//     beforeEach(() => {
-//         mockAllIsIntersecting(false);
-//     });
-
-//     afterEach(() => {
-//         cleanup();
-//     });
-
-//     test('Check most popular series loaded by default', async () => {
-//         const items = getMostPopular(1, 'series');
-//         const genres = getSeriesGenres();
-
-//         getGenres.mockResolvedValue(genres);
-//         getByGenreAndSearch.mockResolvedValue(items);
-
-//         await act(
-//             async () => await waitFor(
-//                 () => render(
-//                     <Provider store={store}>
-//                         <ItemsView tab={TV_ENDPOINT} />
-//                     </Provider>
-//                 )
-//             )
-//         );
-
-//         const image = screen.getByAltText('This is the title text for the most popular series 1');
-//         expect(image.src).toContain(TEST_POSTER_PATH);
-//     });
 
 //     test('Check search series by text filter', async () => {
 //         const items = getBySearchText(1, 'series');
@@ -174,4 +164,3 @@ describe('Movies tests', () => {
 //             () => render(<ItemsView tab={TV_ENDPOINT} />)
 //         );
 //     });
-// });
