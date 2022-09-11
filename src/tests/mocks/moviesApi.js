@@ -91,5 +91,6 @@ export {
   getBySearchText,
   getMoviesGenres,
   getSeriesGenres,
+  RESULTS_PER_PAGE,
   TEST_POSTER_PATH
 }
