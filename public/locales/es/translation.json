@@ -15,5 +15,6 @@
     "no-results": "No hay resultados para tu búsqueda",
     "paginator-1": "Has visto",
     "paginator-2": "de",
-    "paginator-3": "resultados"
+    "paginator-3": "resultados",
+    "aria-loading": "La aplicación está cargando"
 }
