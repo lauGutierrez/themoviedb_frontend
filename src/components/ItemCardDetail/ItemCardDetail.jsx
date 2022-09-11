@@ -2,11 +2,12 @@ import React from 'react';
 
 import { IMAGES_URL } from '../../const/moviesApi';
 
+import './ItemCardDetail.scss';
+
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import { CardActionArea } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
-import Collapse from '@mui/material/Collapse';
 import Typography from '@mui/material/Typography';
 import Drawer from '@mui/material/Drawer';
 
@@ -30,12 +31,12 @@ const ItemCardDetail = (props) => {
             height="400"
             image={props.image ? IMAGES_URL + props.image : "/images/no-image-available.jpg"} />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 'bold' }}>
+            <Typography className="item-card-detail-title" gutterBottom variant="h5" component="div">
               {props.title}
             </Typography>
-            <Collapse in={props.isOpened} timeout="auto" unmountOnExit>
-              <Typography paragraph>{props.overview}</Typography>
-            </Collapse>
+            <Typography className="item-card-detail-overview" paragraph>
+              {props.overview}
+            </Typography>
           </CardContent>
         </CardActionArea>
       </Card>

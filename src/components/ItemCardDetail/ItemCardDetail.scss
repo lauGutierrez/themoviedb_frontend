@@ -1,0 +1,11 @@
+@import '../../css/vars.scss';
+
+.item-card-detail-title {
+    font-weight: bold !important;
+}
+
+.item-card-detail-overview {
+    justify-content: center !important;
+    overflow-y: auto !important;
+    max-height: 300px !important;
+}
