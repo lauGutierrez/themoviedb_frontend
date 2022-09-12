@@ -40,140 +40,141 @@ jest.mock('../services/wrappers/moviesApi');
 jest.mock('react-intersection-observer');
 
 
-// describe('Movies', () => {
-//     beforeAll(() => {
-//         window.scrollTo = (x, y) => {
-//             document.documentElement.scrollTop = y;
-//         }
-//     });
+describe('Movies', () => {
+    beforeAll(() => {
+        window.scrollTo = (x, y) => {
+            document.documentElement.scrollTop = y;
+        }
+    });
 
-//     beforeEach(() => {
-//         useInView.mockImplementation(() => [null, false, null]);
-//     });
+    beforeEach(() => {
+        useInView.mockImplementation(() => [null, false, null]);
+    });
 
-//     test('Check most popular movies loaded by default', async () => {
-//         const items = getMostPopular(1, 'movie');
-//         const genres = getMoviesGenres();
+    test('Check pagination activated on scroll for movies results', async () => {
+        getGenres.mockResolvedValue(getMoviesGenres());
+        getByGenreAndSearch.mockResolvedValue(getMostPopular(1, 'movie'));
 
-//         getGenres.mockResolvedValue(genres);
-//         getByGenreAndSearch.mockResolvedValue(items);
+        await act(
+            async () => await waitFor(
+                () => renderWithProviders(
+                    <ItemsView tab={MOVIE_ENDPOINT} />
+                )
+            )
+        );
 
-//         await act(
-//             async () => await waitFor(
-//                 () => renderWithProviders(
-//                     <ItemsView tab={MOVIE_ENDPOINT} />
-//                 )
-//             )
-//         );
+        getByGenreAndSearch.mockResolvedValue(getMostPopular(2, 'movie'));
+        useInView.mockImplementation(() => [null, true, null]);
 
-//         const image = screen.getByAltText(
-//             'This is the title text for the most popular movie 1'
-//         );
-//         expect(image.src).toContain(TEST_POSTER_PATH);
-//     }, MAX_TIMEOUT);
+        const image = await screen.findByAltText(
+            `This is the title text for the most popular movie ${RESULTS_PER_PAGE + 1}`
+        );
+        expect(image.src).toContain(TEST_POSTER_PATH);
+        const backToTopButton = await screen.findByRole('button', { name: 'aria-back-to-top' });
+    }, MAX_TIMEOUT);
 
-//     test('Check search movies by text filter', async () => {
-//         getGenres.mockResolvedValue(getMoviesGenres());
-//         getByGenreAndSearch.mockResolvedValue(getMostPopular(1, 'movie'));
+    test('Check most popular movies loaded by default', async () => {
+        const items = getMostPopular(1, 'movie');
+        const genres = getMoviesGenres();
 
-//         await act(
-//             async () => await waitFor(
-//                 () => renderWithProviders(
-//                     <ItemsView tab={MOVIE_ENDPOINT} />
-//                 )
-//             )
-//         );
+        getGenres.mockResolvedValue(genres);
+        getByGenreAndSearch.mockResolvedValue(items);
 
-//         getByGenreAndSearch.mockResolvedValue(getBySearchText(1, 'movie'));
+        await act(
+            async () => await waitFor(
+                () => renderWithProviders(
+                    <ItemsView tab={MOVIE_ENDPOINT} />
+                )
+            )
+        );
 
-//         const user = userEvent.setup();
-//         const searchInput = screen.getByPlaceholderText(/search-keys/);
-//         const searchButton = screen.getByRole('button', { name: 'search' });
+        const image = screen.getByAltText(
+            'This is the title text for the most popular movie 1'
+        );
+        expect(image.src).toContain(TEST_POSTER_PATH);
+    }, MAX_TIMEOUT);
 
-//         await user.type(searchInput, 'random search');
-//         user.click(searchButton);
+    test('Check search movies by text filter', async () => {
+        getGenres.mockResolvedValue(getMoviesGenres());
+        getByGenreAndSearch.mockResolvedValue(getMostPopular(1, 'movie'));
 
-//         const image = await screen.findByAltText(
-//             'This is the title text for the filtered by search text movie 1'
-//         );
-//         expect(image.src).toContain(TEST_POSTER_PATH);
-//     }, MAX_TIMEOUT);
+        await act(
+            async () => await waitFor(
+                () => renderWithProviders(
+                    <ItemsView tab={MOVIE_ENDPOINT} />
+                )
+            )
+        );
 
-//     test('Check search movies by genre filter', async () => {
-//         getGenres.mockResolvedValue(getMoviesGenres());
-//         getByGenreAndSearch.mockResolvedValue(getMostPopular(1, 'movie'));
+        getByGenreAndSearch.mockResolvedValue(getBySearchText(1, 'movie'));
 
-//         await act(
-//             async () => await waitFor(
-//                 () => renderWithProviders(
-//                     <ItemsView tab={MOVIE_ENDPOINT} />
-//                 )
-//             )
-//         );
+        const user = userEvent.setup();
+        const searchInput = screen.getByPlaceholderText(/search-keys/);
+        const searchButton = screen.getByRole('button', { name: 'search' });
 
-//         getByGenreAndSearch.mockResolvedValue(getByGenre(1, 'movie'));
+        await user.type(searchInput, 'random search');
+        user.click(searchButton);
 
-//         const user = userEvent.setup();
+        const image = await screen.findByAltText(
+            'This is the title text for the filtered by search text movie 1'
+        );
+        expect(image.src).toContain(TEST_POSTER_PATH);
+    }, MAX_TIMEOUT);
 
-//         const genreSelector = screen.getByRole('button', { name: 'genre ​' });
-//         user.click(genreSelector);
+    test('Check search movies by genre filter', async () => {
+        getGenres.mockResolvedValue(getMoviesGenres());
+        getByGenreAndSearch.mockResolvedValue(getMostPopular(1, 'movie'));
 
-//         const genreOption = await screen.findByText(/Action/);
-//         await act(() => user.click(genreOption));
+        await act(
+            async () => await waitFor(
+                () => renderWithProviders(
+                    <ItemsView tab={MOVIE_ENDPOINT} />
+                )
+            )
+        );
 
-//         const image = await screen.findByAltText(
-//             'This is the title text for the filtered by genre movie 1'
-//         );
-//         expect(image.src).toContain(TEST_POSTER_PATH);
-//     }, MAX_TIMEOUT);
+        getByGenreAndSearch.mockResolvedValue(getByGenre(1, 'movie'));
 
-//     test('Check movie card detail is opened and closed', async () => {
-//         getGenres.mockResolvedValue(getMoviesGenres());
-//         getByGenreAndSearch.mockResolvedValue(getMostPopular(1, 'movie'));
+        const user = userEvent.setup();
 
-//         await act(
-//             async () => await waitFor(
-//                 () => renderWithProviders(
-//                     <ItemsView tab={MOVIE_ENDPOINT} />
-//                 )
-//             )
-//         );
+        const genreSelector = screen.getByRole('button', { name: 'genre ​' });
+        user.click(genreSelector);
 
-//         const user = userEvent.setup();
+        const genreOption = await screen.findByText(/Action/);
+        await act(() => user.click(genreOption));
 
-//         const movieCard = screen.getByRole(
-//             'img',
-//             { name: 'This is the title text for the most popular movie 1' }
-//         );
-//         user.click(movieCard);
+        const image = await screen.findByAltText(
+            'This is the title text for the filtered by genre movie 1'
+        );
+        expect(image.src).toContain(TEST_POSTER_PATH);
+    }, MAX_TIMEOUT);
 
-//         const movieCardDetail = await screen.findByText(
-//             /This is the overview text for the most popular movie 1/
-//         );
-//         await act(() => user.click(movieCardDetail));
-//         await waitFor(() => expect(movieCardDetail).not.toBeInTheDocument());
-//     }, MAX_TIMEOUT);
-// });
+    test('Check movie card detail is opened and closed', async () => {
+        getGenres.mockResolvedValue(getMoviesGenres());
+        getByGenreAndSearch.mockResolvedValue(getMostPopular(1, 'movie'));
 
-//     test('Check pagination activated on scroll for movies results', async () => {
-//         getGenres.mockResolvedValue(getMoviesGenres());
-//         getByGenreAndSearch.mockResolvedValue(getMostPopular(1, 'movie'));
+        await act(
+            async () => await waitFor(
+                () => renderWithProviders(
+                    <ItemsView tab={MOVIE_ENDPOINT} />
+                )
+            )
+        );
 
-//         await act(
-//             async () => await waitFor(
-//                 () => renderWithProviders(
-//                     <ItemsView tab={MOVIE_ENDPOINT} />
-//                 )
-//             )
-//         );
+        const user = userEvent.setup();
 
-//         getByGenreAndSearch.mockResolvedValue(getMostPopular(2, 'movie'));
-//         useInView.mockImplementation(() => [null, true, null]);
+        const movieCard = screen.getByRole(
+            'img',
+            { name: 'This is the title text for the most popular movie 1' }
+        );
+        user.click(movieCard);
 
-//         const image = await screen.findByAltText(
-//             `This is the title text for the most popular movie ${RESULTS_PER_PAGE + 1}`
-//         );
-//         expect(image.src).toContain(TEST_POSTER_PATH);
-//         const backToTopButton = await screen.findByRole('button', { name: 'aria-back-to-top' });
+        const movieCardDetail = await screen.findByText(
+            /This is the overview text for the most popular movie 1/
+        );
+        await act(() => user.click(movieCardDetail));
+        await waitFor(() => expect(movieCardDetail).not.toBeInTheDocument());
+    }, MAX_TIMEOUT);
+});
 
-//     }, MAX_TIMEOUT);
+    

@@ -45,7 +45,6 @@ const Header = (props) => {
 
     useEffect(() => {
         if (visibleTab) {
-            console.log('useEffect visibleTab', visibleTab);
             initGenres();
             addItems();
         }
@@ -95,9 +94,7 @@ const Header = (props) => {
     }
 
     const addItems = async () => {
-        console.log('addItems', visibleTab, genre, query);
         let { result, total } = await getByGenreAndSearch(visibleTab, genre, query, 1);
-        console.log('Header', result);
         dispatch(actions.itemsActions.addItems(result, total));
     }
 

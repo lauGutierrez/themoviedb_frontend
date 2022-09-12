@@ -37,7 +37,6 @@ const ItemsBoard = () => {
 
   const addItems = async () => {
     let { result, total } = await getByGenreAndSearch(visibleTab, genre, query, page);
-    console.log('ItemsBoard', result);
     dispatch(actions.itemsActions.addItems(result, total));
   }
 

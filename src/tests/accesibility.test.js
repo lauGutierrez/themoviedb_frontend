@@ -1,7 +1,7 @@
 import { waitFor, act } from '@testing-library/react';
 import { axe, toHaveNoViolations } from 'jest-axe';
-
 import '@testing-library/jest-dom/extend-expect';
+import 'jest-axe/extend-expect';
 
 import { useInView } from 'react-intersection-observer';
 
@@ -51,13 +51,15 @@ describe('Accesibility', () => {
         window.scrollTo = (x, y) => {
             document.documentElement.scrollTop = y;
         }
+        const { getComputedStyle } = window;
+        window.getComputedStyle = (elt) => getComputedStyle(elt);
     });
 
     beforeEach(() => {
         useInView.mockImplementation(() => [null, false, null]);
     });
 
-    it('header should be accesible', async () => {
+    test('header should be accesible', async () => {
         const { container } = await act(
             async () => await waitFor(
                 () => renderWithProviders(<Header />)
@@ -66,7 +68,7 @@ describe('Accesibility', () => {
         expect(await axe(container)).toHaveNoViolations();
     });
 
-    it('loading state should be accesible', async () => {
+    test('loading state should be accesible', async () => {
         const { container } = await act(
             async () => await waitFor(
                 () => renderWithProviders(<LoadingState />)
@@ -75,7 +77,7 @@ describe('Accesibility', () => {
         expect(await axe(container)).toHaveNoViolations();
     });
 
-    it('scroll paginator should be accesible', async () => {
+    test('scroll paginator should be accesible', async () => {
         const { container } = await act(
             async () => await waitFor(
                 () => renderWithProviders(<ScrollPaginator />)
@@ -84,7 +86,7 @@ describe('Accesibility', () => {
         expect(await axe(container)).toHaveNoViolations();
     });
 
-    it('search bar should be accesible', async () => {
+    test('search bar should be accesible', async () => {
         const { container } = await act(
             async () => await waitFor(
                 () => renderWithProviders(<SearchBar />)
@@ -93,7 +95,7 @@ describe('Accesibility', () => {
         expect(await axe(container)).toHaveNoViolations();
     });
 
-    it('item card should be accesible', async () => {
+    test('item card should be accesible', async () => {
         let mockItem = getMockItem(1, 'movie', 'the most popular');
         const { container } = await act(
             async () => await waitFor(
@@ -110,7 +112,7 @@ describe('Accesibility', () => {
         expect(await axe(container)).toHaveNoViolations();
     });
 
-    it('item card detail should be accesible', async () => {
+    test('item card detail should be accesible', async () => {
         let mockItem = getMockItem(1, 'movie', 'the most popular');
         const { container } = await act(
             async () => await waitFor(
@@ -127,7 +129,7 @@ describe('Accesibility', () => {
         expect(await axe(container)).toHaveNoViolations();
     });
 
-    it('items board should be accesible', async () => {
+    test('items board should be accesible', async () => {
         const { container } = await act(
             async () => await waitFor(
                 () => renderWithProviders(
@@ -138,7 +140,7 @@ describe('Accesibility', () => {
         expect(await axe(container)).toHaveNoViolations();
     });
 
-    it('items view should be accesible', async () => {
+    test('items view should be accesible', async () => {
         getGenres.mockResolvedValue(getMoviesGenres());
         getByGenreAndSearch.mockResolvedValue(getMostPopular(1, 'movie'));
 
