@@ -16,5 +16,7 @@
     "paginator-1": "You have seen",
     "paginator-2" : "of",
     "paginator-3": "results",
-    "aria-loading": "The app is loading"
+    "aria-loading": "The app is loading",
+    "aria-back-to-top": "Back to top",
+    "aria-search": "Search"
 }

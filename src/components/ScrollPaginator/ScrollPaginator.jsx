@@ -13,10 +13,8 @@ const ScrollPaginator = (props) => {
 
   const [current, setCurrent] = React.useState(0);
 
-  const [observedReference, isIntersecting, observedElement] = useInView({
-    threshold: 0.5,
-    triggerOnce: true
-  });
+  // eslint-disable-next-line
+  const [observedReference, isIntersecting] = useInView({threshold: 0.5,});
 
   const items = useSelector(state => state.items.list);
   const total = useSelector(state => state.items.total);

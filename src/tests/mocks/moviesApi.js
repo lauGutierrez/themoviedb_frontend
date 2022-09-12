@@ -21,16 +21,18 @@ const getMockItems = (page, item, filter) => {
 
   [...Array(RESULTS_PER_PAGE)].forEach((_, i) => {
     let id = (page - 1) * RESULTS_PER_PAGE + i + 1;
-    movies['result'].push(
-      {
-        "id": id,
-        "overview": `This is the overview text for ${filter} ${item} ${id}`,
-        "poster_path": TEST_POSTER_PATH,
-        "title": `This is the title text for ${filter} ${item} ${id}`
-      }
-    );
+    movies['result'].push(getMockItem(id, filter, item));
   });
   return movies;
+}
+
+const getMockItem = (id, filter, item) => {
+  return {
+    "id": id,
+    "overview": `This is the overview text for ${filter} ${item} ${id}`,
+    "poster_path": TEST_POSTER_PATH,
+    "title": `This is the title text for ${filter} ${item} ${id}`
+  }
 }
 
 const getMoviesGenres = () => {
@@ -91,6 +93,7 @@ export {
   getBySearchText,
   getMoviesGenres,
   getSeriesGenres,
+  getMockItem,
   RESULTS_PER_PAGE,
   TEST_POSTER_PATH
 }

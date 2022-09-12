@@ -127,7 +127,7 @@ const ItemsBoard = () => {
       <React.Fragment>
         {page > 2 ?
           (
-            <Fab className="back-to-top-button" onClick={goBackToTop}>
+            <Fab className="back-to-top-button" aria-label={t('aria-back-to-top')} onClick={goBackToTop}>
               <KeyboardArrowUpIcon />
             </Fab>
           ) :

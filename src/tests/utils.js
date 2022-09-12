@@ -4,6 +4,8 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import reducer from '../services/redux/reducers/reducer.js';
 
+const MAX_TIMEOUT = 10000;
+
 const renderWithProviders = (children) => {
   return render(
     <Provider store={configureStore({ reducer: reducer })}>
@@ -13,5 +15,6 @@ const renderWithProviders = (children) => {
 };
 
 export {
-  renderWithProviders
+  renderWithProviders,
+  MAX_TIMEOUT
 };

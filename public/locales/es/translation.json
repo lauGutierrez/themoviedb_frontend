@@ -16,5 +16,7 @@
     "paginator-1": "Has visto",
     "paginator-2": "de",
     "paginator-3": "resultados",
-    "aria-loading": "La aplicación está cargando"
+    "aria-loading": "La aplicación está cargando",
+    "aria-back-to-top": "Volver al principio",
+    "aria-search": "Buscar"
 }
