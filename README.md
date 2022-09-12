@@ -79,21 +79,41 @@ Follow these steps to test the application:
 
    ![How item card detail looks](./doc/images/item_card_detail.gif)
 
-### Implementation details
 
-##### Movies vs TV Series
 
-asdf
+## Implementation details
 
-##### API calls
+### Movies vs TV Series items
 
-asdf
+As the same information is expected for movies and TV series, a single and general component called *ItemsView* has been developed. This way, by providing just a props tag to specify the nature of the item (if it is a movie or a series) it works properly for both. Likewise, this approach is applied to the api wrapper, through which calls are made to *TMDB* api. General functions are exposed and adequate results are returned by only providing the item tag.
 
-##### Why redux?
+### API calls
 
-asdf
+For a quick overview on the subset of *TMDB* api endpoints involved to develop this application, check `src/const/moviesApi.js`. For further details, check the wrapper at `src/services/wrappers/moviesApi.js`
 
-##### Testing
+### Why redux?
+
+Even if a set of components have been required to develop this viewer, all them can be considered as subcomponents that provide a single core component. Let's considerate the following:
+
+* The search options, as well as the visible tab (movies or TV series), are all together within the *Header* component. So this is the component which really controls which results should be displayed.
+* The *ItemsBoard* component is responsible for displaying the results, but it is decoupled from the applied filters. It is focused on rendering.
+
+This is why *Header* and *ItemsBoard* (and their subcomponents) are really acting like parts of the same component and both should work together. With this scenario, it makes sense to use a common state, updatable and accessible from all these separated components.
+
+### Testing
+
+With the help of the [testing library](https://testing-library.com/), a set of unit tests has been added to the project. They have a mixed nature and can be considered as integration tests too, as almost all the information rendered is dependent on the information recovered from *TMDB* api.
+
+All tests are meant to test the application as a whole, because, as explained in prior sections, all components are in fact subcomponentes required to build the viewer. That's why it is not possible to develop individual tests for each component separately.
+
+Additionally, [jest-axe](https://github.com/nickcolley/jest-axe) has been used in order to apply a basic accessibility check to all components.
+
+The most distinctive aspects of the tests at the implementation level are the following:
+
+* The intersection observer requires to be mocked. If not, the intersection will be detected always and only once when component is rendered.
+* Functions included in the api wrapper require to be mocked, to always have a predictable fake response when the test executes requests.
+* As redux is applied, a store should be provided for each test. Instead of standard render function, a custom *renderWithProviders* function is used to render the required component within the test.
+* The *useNavigate* hook from the *react-router* should be mocked too, as tests are not executed in a browser environment. Similarly, the *window.scrollTo* function has to be mocked.
 
 
 
@@ -103,13 +123,15 @@ asdf
 
 ##### Start the application
 
-After downloading this repository, in the project directory you can run: `npm start`
+After downloading this repository, go to `src/const/moviesApi.js` and look for the following constant `API_KEY`. Its value should be replaced with your own generated API key. It can be obtained [here](https://www.themoviedb.org/settings/api).
+
+Once the previous configuration has been changed, in the project directory you can run: `npm start`
 
 This will run the application in the development mode. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 ##### Test the application
 
-3 sets of test are available (for testing series, movies and accessibility) a total of 18 tests. To run the test, execute: `npm test`
+3 sets of test are available (a total of 18 tests) for testing movies, TV series and accessibility. To run the test, execute: `npm test`
 
 ### Deployed version
 
